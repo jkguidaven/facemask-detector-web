@@ -16,13 +16,21 @@ gulp.task("clean", function () {
 });
 
 gulp.task("build:html", () => {
-  return gulp.src(`index.html`).pipe(gulp.dest(outputDirectory));
+  return gulp
+    .src([
+      "index.html",
+      `${sourceDirectory}/cascades/*`,
+      "opencv.js",
+      "utils.js",
+    ])
+    .pipe(gulp.dest(outputDirectory));
 });
 gulp.task("build:js", () => {
   return browserify({
     basedir: ".",
     debug: true,
     entries: ["src/main.ts"],
+    standalone: "runApp",
     cache: {},
     packageCache: {},
   })
@@ -43,5 +51,5 @@ gulp.task("build:js", () => {
 gulp.task("build", gulp.series(["build:html", "build:js"]));
 
 gulp.task("watch", function () {
-  return gulp.watch(`**`, gulp.series(["build"]));
+  return gulp.watch(`${sourceDirectory}/**`, gulp.series(["build"]));
 });

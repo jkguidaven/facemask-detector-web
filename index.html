@@ -3,9 +3,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Facemask Detector Web</title>
-    <script defer src="bundle.js"></script>
+    <script src="utils.js"></script>
+    <script src="opencv.js"></script>
+    <script src="bundle.js"></script>
   </head>
   <body>
-    Hello World! 
+    <video id="source" width="320" height="240"></video>
+    <canvas id="output" width="320" height="240"></canvas>
+
+    <script>
+      cv['onRuntimeInitialized']=()=>{
+        const utils = new Utils();
+
+        let cascadeFiles = [
+          'face.xml',
+          'eye.xml',
+          'mouth.xml',
+          'nose.xml'
+        ];
+
+        cascadeFiles.forEach((file) => {
+          utils.createFileFromUrl(file, file, () => {
+            console.log("loaded cascade file:" + file);
+          });
+        })
+
+        utils.startCamera('qvga', () => {
+          // We will have to pass cv to our app to access it
+          runApp(cv, utils);
+        }, 'source');
+      };
+    </script>
   </body>
 </html>
