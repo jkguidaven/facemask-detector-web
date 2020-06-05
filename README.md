@@ -14,7 +14,7 @@ A web application that demonstrate face mask detection functionality using OpenC
 git clone git@github.com:jkguidaven/facemask-detector-web.git
 
 // 2. cd to project directory
-cd ball-motion-web
+cd facemask-detector-web
 
 // 3. Install dependencies
 yarn install
